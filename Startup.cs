@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using TodoApiV5.Models;
 
 namespace TodoApiV5
 {
@@ -28,6 +30,9 @@ namespace TodoApiV5
         {
 
             services.AddControllers();
+            services.AddDbContext<TodoContext>(opt =>
+                                   opt.UseInMemoryDatabase("TodoList"));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoApiV5", Version = "v1" });

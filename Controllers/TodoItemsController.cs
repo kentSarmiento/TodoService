@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TodoApiV5.Models;
+using ASPNetCore5TodoAPI.Models;
 
-namespace TodoApiV5.Controllers
+namespace ASPNetCore5TodoAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

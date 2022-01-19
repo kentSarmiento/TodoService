@@ -12,9 +12,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
-using TodoApiV5.Models;
+using ASPNetCore5TodoAPI.Models;
 
-namespace TodoApiV5
+namespace ASPNetCore5TodoAPI
 {
     public class Startup
     {
@@ -35,7 +35,7 @@ namespace TodoApiV5
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoApiV5", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ASPNetCore5TodoAPI", Version = "v1" });
             });
         }
 
@@ -46,7 +46,7 @@ namespace TodoApiV5
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TodoApiV5 v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASPNetCore5TodoAPI v1"));
             }
 
             app.UseHttpsRedirection();

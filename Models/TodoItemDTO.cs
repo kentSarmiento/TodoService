@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TodoApiV5.Models
+namespace ASPNetCore5TodoAPI.Models
 {
     public class TodoItemDTO
     {

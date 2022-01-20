@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using ASPNetCore5TodoAPI.Models;
+using ASPNetCore5TodoAPI.Entities;
 using ASPNetCore5TodoAPI.Datastores;
 using ASPNetCore5TodoAPI.Repositories;
 
@@ -29,20 +29,28 @@ namespace ASPNetCore5TodoAPI
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureDevelopmentServices(IServiceCollection services)
         {
-            services.Configure<TodoItemsDatabaseSettings>(
-                Configuration.GetSection(nameof(TodoItemsDatabaseSettings)));
+            if (Configuration.GetValue<string>("Database", "sql").ToLower() == "sql")
+            {
+                services.AddDbContext<TodoContext>(opt =>
+                                       opt.UseInMemoryDatabase("TodoList"));
+                services.AddTransient<ITodoItemsDatastore, TodoItemsInMemoryDatastore>();
+                services.AddTransient<ITodoItemsRepository, TodoItemsRepository>();
+            }
+            else
+            {
+                services.Configure<TodoItemsDatabaseSettings>(
+                    Configuration.GetSection(nameof(TodoItemsDatabaseSettings)));
 
-            services.AddSingleton<ITodoItemsDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<TodoItemsDatabaseSettings>>().Value);
+                services.AddSingleton<ITodoItemsDatabaseSettings>(sp =>
+                    sp.GetRequiredService<IOptions<TodoItemsDatabaseSettings>>().Value);
 
-            services.AddSingleton<ITodoItemsDatastore, TodoItemsDatastore>();
-            services.AddSingleton<ITodoItemsRepository, TodoItemsRepository>();
+                services.AddSingleton<ITodoItemsDatastore, TodoItemsMongoDatastore>();
+                services.AddSingleton<ITodoItemsRepository, TodoItemsRepository>();
+            }
 
             services.AddControllers();
-            services.AddDbContext<TodoContext>(opt =>
-                                   opt.UseInMemoryDatabase("TodoList"));
 
             services.AddSwaggerGen(c =>
             {

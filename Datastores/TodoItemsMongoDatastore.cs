@@ -6,16 +6,16 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using ASPNetCore5TodoAPI.Models;
+using ASPNetCore5TodoAPI.Entities;
 
 namespace ASPNetCore5TodoAPI.Datastores
 {
-    public class TodoItemsDatastore : ITodoItemsDatastore
+    public class TodoItemsMongoDatastore : ITodoItemsDatastore
     {
         private readonly IMongoCollection<DatabaseItem> _todoItems;
         private readonly ILogger _logger;
 
-        public TodoItemsDatastore(ITodoItemsDatabaseSettings settings, ILogger<TodoItemsDatastore> logger)
+        public TodoItemsMongoDatastore(ITodoItemsDatabaseSettings settings, ILogger<TodoItemsMongoDatastore> logger)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);

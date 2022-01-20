@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ASPNetCore5TodoAPI.Models;
+using ASPNetCore5TodoAPI.Entities;
 using ASPNetCore5TodoAPI.Datastores;
 
 namespace ASPNetCore5TodoAPI.Repositories

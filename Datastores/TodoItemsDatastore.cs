@@ -65,6 +65,21 @@ namespace ASPNetCore5TodoAPI.Datastores
 
             return item;
         }
+
+        public void Update(string id, TodoItem item)
+        {
+            DatabaseItem databaseItem = new DatabaseItem
+            {
+                Id = item.Id,
+                Name = item.Name,
+                IsComplete = item.IsComplete,
+            };
+
+            _todoItems.ReplaceOne(todoItem => todoItem.Id == id, databaseItem);
+        }
+
+        public void Delete(string id) =>
+            _todoItems.DeleteOne(todoItem => todoItem.Id == id);
     }
 
     public class DatabaseItem

@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ASPNetCore5TodoAPI.Models;
 using ASPNetCore5TodoAPI.Datastores;
+using ASPNetCore5TodoAPI.Repositories;
 
 namespace ASPNetCore5TodoAPI
 {
@@ -35,6 +36,9 @@ namespace ASPNetCore5TodoAPI
 
             services.AddSingleton<ITodoItemsDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<TodoItemsDatabaseSettings>>().Value);
+
+            services.AddSingleton<ITodoItemsDatastore, TodoItemsDatastore>();
+            services.AddSingleton<ITodoItemsRepository, TodoItemsRepository>();
 
             services.AddControllers();
             services.AddDbContext<TodoContext>(opt =>

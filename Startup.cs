@@ -12,7 +12,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using ASPNetCore5TodoAPI.Models;
+using ASPNetCore5TodoAPI.Datastores;
 
 namespace ASPNetCore5TodoAPI
 {
@@ -28,6 +30,11 @@ namespace ASPNetCore5TodoAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<TodoItemsDatabaseSettings>(
+                Configuration.GetSection(nameof(TodoItemsDatabaseSettings)));
+
+            services.AddSingleton<ITodoItemsDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<TodoItemsDatabaseSettings>>().Value);
 
             services.AddControllers();
             services.AddDbContext<TodoContext>(opt =>

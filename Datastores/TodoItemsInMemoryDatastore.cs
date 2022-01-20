@@ -27,8 +27,11 @@ namespace ASPNetCore5TodoAPI.Datastores
 
         public TodoItem Create(TodoItem item)
         {
+            item.Id = Guid.NewGuid().ToString();
+
             _context.TodoItems.Add(item);
             _context.SaveChanges();
+
             return item;
         }
 

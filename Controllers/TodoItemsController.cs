@@ -32,11 +32,11 @@ namespace ASPNetCore5TodoAPI.Controllers
         /// <response code="200">Returns list of todo items</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<TodoItemDTO>> GetTodoItems()
+        public ActionResult<IEnumerable<GetTodoItemDTO>> GetTodoItems()
         {
             List<TodoItem> storedItems = _todoItemsRepository.Get();
 
-            List<TodoItemDTO> todoItems = storedItems.Select(item => new TodoItemDTO()
+            List<GetTodoItemDTO> todoItems = storedItems.Select(item => new GetTodoItemDTO()
             {
                 Id = item.Id,
                 Name = item.Name,
@@ -55,14 +55,14 @@ namespace ASPNetCore5TodoAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<TodoItemDTO>> GetTodoItem(string id)
+        public ActionResult<IEnumerable<GetTodoItemDTO>> GetTodoItem(string id)
         {
             var storedItem = _todoItemsRepository.Get(id);
 
             if (storedItem == null)
                 return NotFound();
 
-            TodoItemDTO todoItem = new TodoItemDTO()
+            GetTodoItemDTO todoItem = new GetTodoItemDTO()
             {
                 Id = storedItem.Id,
                 Name = storedItem.Name,
@@ -81,20 +81,27 @@ namespace ASPNetCore5TodoAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<TodoItemDTO> CreateTodoItem(TodoItemDTO todoItemDTO)
+        public ActionResult<TodoItemDTO> CreateTodoItem(CreateTodoItemDTO todoItemDTO)
         {
             var todoItem = new TodoItem
             {
-                Id = todoItemDTO.Id,
-                IsComplete = todoItemDTO.IsComplete,
-                Name = todoItemDTO.Name
+                Name = todoItemDTO.Name,
+                IsComplete = todoItemDTO.IsComplete
             };
 
             _todoItemsRepository.Create(todoItem);
+
+            var createdItemDto = new TodoItemDTO
+            {
+                Id = todoItem.Id,
+                Name = todoItem.Name,
+                IsComplete = todoItem.IsComplete
+            };
+
             return CreatedAtAction(
                 nameof(GetTodoItem),
                 new { id = todoItem.Id },
-                todoItemDTO);
+                createdItemDto);
         }
 
     }

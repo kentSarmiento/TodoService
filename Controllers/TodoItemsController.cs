@@ -32,7 +32,7 @@ namespace ASPNetCore5TodoAPI.Controllers
 
         // GET: api/TodoItems/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoItemDTO>> GetTodoItem(long id)
+        public async Task<ActionResult<TodoItemDTO>> GetTodoItem(string id)
         {
             var todoItem = await _context.TodoItems.FindAsync(id);
 
@@ -47,7 +47,7 @@ namespace ASPNetCore5TodoAPI.Controllers
         // PUT: api/TodoItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTodoItem(long id, TodoItemDTO todoItemDTO)
+        public async Task<IActionResult> UpdateTodoItem(string id, TodoItemDTO todoItemDTO)
         {
             if (id != todoItemDTO.Id)
             {
@@ -84,6 +84,7 @@ namespace ASPNetCore5TodoAPI.Controllers
         {
             var todoItem = new TodoItem
             {
+                Id = todoItemDTO.Id,
                 IsComplete = todoItemDTO.IsComplete,
                 Name = todoItemDTO.Name
             };
@@ -99,7 +100,7 @@ namespace ASPNetCore5TodoAPI.Controllers
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTodoItem(long id)
+        public async Task<IActionResult> DeleteTodoItem(string id)
         {
             var todoItem = await _context.TodoItems.FindAsync(id);
             if (todoItem == null)
@@ -113,7 +114,7 @@ namespace ASPNetCore5TodoAPI.Controllers
             return NoContent();
         }
 
-        private bool TodoItemExists(long id)
+        private bool TodoItemExists(string id)
         {
             return _context.TodoItems.Any(e => e.Id == id);
         }

@@ -13,5 +13,9 @@ namespace ASPNetCore5TodoAPI.Datastores
         public TodoItem Get(string id);
 
         public TodoItem Create(TodoItem item);
+
+        public void Update(string id, TodoItem item);
+
+        public void Delete(string id);
     }
 }

@@ -55,7 +55,9 @@ namespace ASPNetCore5TodoAPI
                 services.AddSingleton<ITodoItemsRepository, TodoItemsRepository>();
             }
 
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddNewtonsoftJson();
 
             services.AddSwaggerGen(options =>
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using ASPNetCore5TodoAPI.Entities;
 
 namespace ASPNetCore5TodoAPI.Datastores
@@ -37,10 +38,24 @@ namespace ASPNetCore5TodoAPI.Datastores
 
         public void Update(string id, TodoItem item)
         {
+
+            _context.Entry(item).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
 
         public void Delete(string id)
         {
+            var todoItem = _context.TodoItems.Find(id);
+            _context.TodoItems.Remove(todoItem);
+            _context.SaveChanges();
         }
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using ASPNetCore5TodoAPI.Entities;
 using ASPNetCore5TodoAPI.DTOs;
 using ASPNetCore5TodoAPI.Repositories;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace ASPNetCore5TodoAPI.Controllers
 {
@@ -119,7 +120,7 @@ namespace ASPNetCore5TodoAPI.Controllers
         }
 
         /// <summary>
-        /// Updates a Todo Item based on input Id and data
+        /// Updates a Todo Item based on input Id and data (using PUT method)
         /// </summary>
         /// <returns>None</returns>
         /// <response code="204">Todo item is updated</response>
@@ -144,6 +145,44 @@ namespace ASPNetCore5TodoAPI.Controllers
                 Name = todoItemDTO.Name,
                 IsComplete = todoItemDTO.IsComplete
             };
+
+            _todoItemsRepository.Update(id, todoItem);
+            return NoContent();
+        }
+
+
+        /// <summary>
+        /// Updates a Todo Item based on input Id and data (using PATCH method)
+        /// </summary>
+        /// <returns>None</returns>
+        /// <response code="204">Todo item is updated</response>
+        /// <response code="401">User is not authenticated</response>
+        /// <response code="403">User is not authorized</response>
+        /// <response code="404">If item with specified Id does not exist</response>
+        [HttpPatch("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult PatchTodoItem(string id, [FromBody] JsonPatchDocument<TodoItemDTO> patchDoc)
+        {
+            var todoItem = _todoItemsRepository.Get(id);
+
+            if (todoItem == null)
+                return NotFound();
+
+            var todoItemDTO = new TodoItemDTO
+            {
+                Id = todoItem.Id,
+                Name = todoItem.Name,
+                IsComplete = todoItem.IsComplete
+            };
+
+            patchDoc.ApplyTo(todoItemDTO);
+
+            todoItem.Id = todoItemDTO.Id;
+            todoItem.Name = todoItemDTO.Name;
+            todoItem.IsComplete = todoItemDTO.IsComplete;
 
             _todoItemsRepository.Update(id, todoItem);
             return NoContent();

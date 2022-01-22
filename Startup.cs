@@ -18,9 +18,11 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Filters;
+using AutoMapper;
 using ASPNetCore5TodoAPI.Entities;
 using ASPNetCore5TodoAPI.Datastores;
 using ASPNetCore5TodoAPI.Repositories;
+using ASPNetCore5TodoAPI.Mappings;
 
 namespace ASPNetCore5TodoAPI
 {
@@ -101,6 +103,9 @@ namespace ASPNetCore5TodoAPI
                         ValidateAudience = false
                     };
                 });
+
+            services.AddAutoMapper(typeof(TodoItemMappingProfile));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,11 +6,11 @@ using System.Net.Mime;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.JsonPatch;
+using AutoMapper;
 using ASPNetCore5TodoAPI.Entities;
 using ASPNetCore5TodoAPI.DTOs;
 using ASPNetCore5TodoAPI.Repositories;
-using Microsoft.AspNetCore.JsonPatch;
 
 namespace ASPNetCore5TodoAPI.Controllers
 {
@@ -22,10 +22,12 @@ namespace ASPNetCore5TodoAPI.Controllers
     public class TodoItemsController : ControllerBase
     {
         private readonly ITodoItemsRepository _todoItemsRepository;
+        private readonly IMapper _mapper;
 
-        public TodoItemsController(ITodoItemsRepository todoItemsRepository)
+        public TodoItemsController(ITodoItemsRepository todoItemsRepository, IMapper mapper)
         {
             _todoItemsRepository = todoItemsRepository;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -42,13 +44,8 @@ namespace ASPNetCore5TodoAPI.Controllers
         public ActionResult<IEnumerable<GetTodoItemDTO>> GetTodoItems()
         {
             List<TodoItem> storedItems = _todoItemsRepository.Get();
-
-            List<GetTodoItemDTO> todoItems = storedItems.Select(item => new GetTodoItemDTO()
-            {
-                Id = item.Id,
-                Name = item.Name,
-                IsComplete = item.IsComplete
-            }).ToList();
+            List<GetTodoItemDTO> todoItems = storedItems.Select(
+                item => _mapper.Map<GetTodoItemDTO>(item)).ToList();
 
             return Ok(todoItems);
         }
@@ -73,13 +70,7 @@ namespace ASPNetCore5TodoAPI.Controllers
             if (storedItem == null)
                 return NotFound();
 
-            GetTodoItemDTO todoItem = new GetTodoItemDTO()
-            {
-                Id = storedItem.Id,
-                Name = storedItem.Name,
-                IsComplete = storedItem.IsComplete
-            };
-
+            GetTodoItemDTO todoItem = _mapper.Map<GetTodoItemDTO>(storedItem);
             return Ok(todoItem);
         }
 
@@ -96,27 +87,13 @@ namespace ASPNetCore5TodoAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public ActionResult<TodoItemDTO> CreateTodoItem(CreateTodoItemDTO todoItemDTO)
+        public ActionResult<TodoItemDTO> CreateTodoItem(CreateTodoItemDTO todoItemDto)
         {
-            var todoItem = new TodoItem
-            {
-                Name = todoItemDTO.Name,
-                IsComplete = todoItemDTO.IsComplete
-            };
-
+            TodoItem todoItem = _mapper.Map<TodoItem>(todoItemDto);
             _todoItemsRepository.Create(todoItem);
 
-            var createdItemDto = new TodoItemDTO
-            {
-                Id = todoItem.Id,
-                Name = todoItem.Name,
-                IsComplete = todoItem.IsComplete
-            };
-
-            return CreatedAtAction(
-                nameof(GetTodoItem),
-                new { id = todoItem.Id },
-                createdItemDto);
+            TodoItemDTO createdItemDto = _mapper.Map<TodoItemDTO>(todoItem);
+            return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, createdItemDto);
         }
 
         /// <summary>
@@ -132,24 +109,18 @@ namespace ASPNetCore5TodoAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public ActionResult UpdateTodoItem(string id, TodoItemDTO todoItemDTO)
+        public ActionResult UpdateTodoItem(string id, TodoItemDTO todoItemDto)
         {
-            if (id != todoItemDTO.Id)
+            if (id != todoItemDto.Id)
             {
                 return BadRequest();
             }
 
-            var todoItem = new TodoItem
-            {
-                Id = todoItemDTO.Id,
-                Name = todoItemDTO.Name,
-                IsComplete = todoItemDTO.IsComplete
-            };
-
+            TodoItem todoItem = _mapper.Map<TodoItem>(todoItemDto);
             _todoItemsRepository.Update(id, todoItem);
+
             return NoContent();
         }
-
 
         /// <summary>
         /// Updates a Todo Item based on input Id and data (using PATCH method)
@@ -171,20 +142,13 @@ namespace ASPNetCore5TodoAPI.Controllers
             if (todoItem == null)
                 return NotFound();
 
-            var todoItemDTO = new TodoItemDTO
-            {
-                Id = todoItem.Id,
-                Name = todoItem.Name,
-                IsComplete = todoItem.IsComplete
-            };
+            TodoItemDTO todoItemDto = _mapper.Map<TodoItemDTO>(todoItem);
+            patchDoc.ApplyTo(todoItemDto);
 
-            patchDoc.ApplyTo(todoItemDTO);
-
-            todoItem.Id = todoItemDTO.Id;
-            todoItem.Name = todoItemDTO.Name;
-            todoItem.IsComplete = todoItemDTO.IsComplete;
-
+            todoItem.Name = todoItemDto.Name;
+            todoItem.IsComplete = todoItemDto.IsComplete;
             _todoItemsRepository.Update(id, todoItem);
+
             return NoContent();
         }
 

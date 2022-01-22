@@ -118,5 +118,59 @@ namespace ASPNetCore5TodoAPI.Controllers
                 createdItemDto);
         }
 
+        /// <summary>
+        /// Updates a Todo Item based on input Id and data
+        /// </summary>
+        /// <returns>None</returns>
+        /// <response code="204">Todo item is updated</response>
+        /// <response code="400">Request contains invalid data</response>
+        /// <response code="401">User is not authenticated</response>
+        /// <response code="403">User is not authorized</response>
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public ActionResult UpdateTodoItem(string id, TodoItemDTO todoItemDTO)
+        {
+            if (id != todoItemDTO.Id)
+            {
+                return BadRequest();
+            }
+
+            var todoItem = new TodoItem
+            {
+                Id = todoItemDTO.Id,
+                Name = todoItemDTO.Name,
+                IsComplete = todoItemDTO.IsComplete
+            };
+
+            _todoItemsRepository.Update(id, todoItem);
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Deletes a Todo Item based on input Id
+        /// </summary>
+        /// <returns>None</returns>
+        /// <response code="204">Todo item is deleted</response>
+        /// <response code="401">User is not authenticated</response>
+        /// <response code="403">User is not authorized</response>
+        /// <response code="404">If item with specified Id does not exist</response>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult DeleteTodoItem(string id)
+        {
+            var storedItem = _todoItemsRepository.Get(id);
+
+            if (storedItem == null)
+                return NotFound();
+
+            _todoItemsRepository.Delete(id);
+            return NoContent();
+        }
     }
 }

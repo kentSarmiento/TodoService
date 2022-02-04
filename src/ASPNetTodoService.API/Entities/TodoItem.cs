@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ASPNetTodoAPI.Entities
+namespace ASPNetTodoService.API.Entities
 {
     public class TodoItem
     {

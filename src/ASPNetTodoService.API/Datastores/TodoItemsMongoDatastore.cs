@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using ASPNetTodoAPI.Entities;
+using ASPNetTodoService.API.Entities;
 
-namespace ASPNetTodoAPI.Datastores
+namespace ASPNetTodoService.API.Datastores
 {
     public class TodoItemsMongoDatastore : ITodoItemsDatastore
     {

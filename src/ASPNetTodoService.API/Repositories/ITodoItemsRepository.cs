@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ASPNetTodoAPI.Entities;
+using ASPNetTodoService.API.Entities;
 
-namespace ASPNetTodoAPI.Repositories
+namespace ASPNetTodoService.API.Repositories
 {
     public interface ITodoItemsRepository
     {

@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using AutoMapper;
-using ASPNetTodoAPI.Entities;
-using ASPNetTodoAPI.DTOs;
-using ASPNetTodoAPI.Repositories;
+using ASPNetTodoService.API.Entities;
+using ASPNetTodoService.API.DTOs;
+using ASPNetTodoService.API.Repositories;
 
-namespace ASPNetTodoAPI.Controllers
+namespace ASPNetTodoService.API.Controllers
 {
     [Route("api/todoitems")]
     [ApiController]

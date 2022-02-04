@@ -19,12 +19,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Filters;
 using AutoMapper;
-using ASPNetCore5TodoAPI.Entities;
-using ASPNetCore5TodoAPI.Datastores;
-using ASPNetCore5TodoAPI.Repositories;
-using ASPNetCore5TodoAPI.Mappings;
+using ASPNetTodoAPI.Entities;
+using ASPNetTodoAPI.Datastores;
+using ASPNetTodoAPI.Repositories;
+using ASPNetTodoAPI.Mappings;
 
-namespace ASPNetCore5TodoAPI
+namespace ASPNetTodoAPI
 {
     public class Startup
     {
@@ -117,7 +117,7 @@ namespace ASPNetCore5TodoAPI
             }
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASPNetCore5TodoAPI v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASPNetTodoAPI v1"));
 
             app.UseHttpsRedirection();
 

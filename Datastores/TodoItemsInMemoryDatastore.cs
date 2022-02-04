@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using ASPNetCore5TodoAPI.Entities;
+using ASPNetTodoAPI.Entities;
 
-namespace ASPNetCore5TodoAPI.Datastores
+namespace ASPNetTodoAPI.Datastores
 {
     public class TodoItemsInMemoryDatastore : ITodoItemsDatastore
     {

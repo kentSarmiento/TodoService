@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ASPNetCore5TodoAPI.Entities;
+using ASPNetTodoAPI.Entities;
 
-namespace ASPNetCore5TodoAPI.Datastores
+namespace ASPNetTodoAPI.Datastores
 {
     public interface ITodoItemsDatastore
     {

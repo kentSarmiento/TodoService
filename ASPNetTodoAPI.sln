@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPNetCore5TodoAPI", "ASPNetCore5TodoAPI.csproj", "{1D01CDD7-CCF5-4655-B946-4BF9B5A6F6A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPNetTodoAPI", "ASPNetTodoAPI.csproj", "{1D01CDD7-CCF5-4655-B946-4BF9B5A6F6A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

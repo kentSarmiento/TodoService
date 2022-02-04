@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using ASPNetCore5TodoAPI.DTOs;
-using ASPNetCore5TodoAPI.Entities;
+using ASPNetTodoAPI.DTOs;
+using ASPNetTodoAPI.Entities;
 
-namespace ASPNetCore5TodoAPI.Mappings
+namespace ASPNetTodoAPI.Mappings
 {
     public class TodoItemMappingProfile : Profile
     {

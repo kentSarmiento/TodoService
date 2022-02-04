@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ASPNetCore5TodoAPI.DTOs
+namespace ASPNetTodoAPI.DTOs
 {
     public class TodoItemDTO
     {

@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPNetTodoService.API", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPNetTodoService.Infrastructure", "src\ASPNetTodoService.Infrastructure\ASPNetTodoService.Infrastructure.csproj", "{01BD3371-FE08-4FC7-9694-55C08B26DE64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNetTodoService.Domain", "src\ASPNetTodoService.Domain\ASPNetTodoService.Domain.csproj", "{53998EF7-C222-4D29-B868-FAD4505B301A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPNetTodoService.Domain", "src\ASPNetTodoService.Domain\ASPNetTodoService.Domain.csproj", "{53998EF7-C222-4D29-B868-FAD4505B301A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPNetTodoService.UnitTest", "test\ASPNetTodoService.UnitTest\ASPNetTodoService.UnitTest.csproj", "{656402B3-1EEC-4C2D-922C-9E7C9E35D86C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{53998EF7-C222-4D29-B868-FAD4505B301A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53998EF7-C222-4D29-B868-FAD4505B301A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53998EF7-C222-4D29-B868-FAD4505B301A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{656402B3-1EEC-4C2D-922C-9E7C9E35D86C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{656402B3-1EEC-4C2D-922C-9E7C9E35D86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{656402B3-1EEC-4C2D-922C-9E7C9E35D86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{656402B3-1EEC-4C2D-922C-9E7C9E35D86C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

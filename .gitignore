@@ -2,3 +2,6 @@
 .vscode/
 bin/
 obj/
+out/
+coveragereport/
+TestResults/

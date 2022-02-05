@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using AutoMapper;
-using ASPNetTodoService.API.Entities;
 using ASPNetTodoService.API.DTOs;
-using ASPNetTodoService.API.Repositories;
+using ASPNetTodoService.Domain.Entities;
+using ASPNetTodoService.Infrastructure.Repositories;
 
 namespace ASPNetTodoService.API.Controllers
 {

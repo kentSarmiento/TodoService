@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ASPNetTodoService.API.Datastores
+namespace ASPNetTodoService.Infrastructure.Datastores
 {
     public interface ITodoItemsDatabaseSettings
     {

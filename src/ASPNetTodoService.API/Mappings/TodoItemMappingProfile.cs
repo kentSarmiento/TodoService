@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ASPNetTodoService.API.DTOs;
-using ASPNetTodoService.API.Entities;
+using ASPNetTodoService.Domain.Entities;
 
 namespace ASPNetTodoService.API.Mappings
 {

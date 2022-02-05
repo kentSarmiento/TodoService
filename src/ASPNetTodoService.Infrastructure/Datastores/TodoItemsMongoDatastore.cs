@@ -2,26 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using ASPNetTodoService.API.Entities;
+using ASPNetTodoService.Domain.Entities;
 
-namespace ASPNetTodoService.API.Datastores
+namespace ASPNetTodoService.Infrastructure.Datastores
 {
     public class TodoItemsMongoDatastore : ITodoItemsDatastore
     {
         private readonly IMongoCollection<DatabaseItem> _todoItems;
-        private readonly ILogger _logger;
 
-        public TodoItemsMongoDatastore(ITodoItemsDatabaseSettings settings, ILogger<TodoItemsMongoDatastore> logger)
+        public TodoItemsMongoDatastore(ITodoItemsDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
             _todoItems = database.GetCollection<DatabaseItem>(settings.TodoItemsCollectionName);
-            _logger = logger;
         }
 
         public List<TodoItem> Get()

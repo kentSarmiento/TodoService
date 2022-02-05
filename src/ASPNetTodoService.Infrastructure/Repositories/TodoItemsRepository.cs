@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ASPNetTodoService.API.Entities;
-using ASPNetTodoService.API.Datastores;
+using ASPNetTodoService.Domain.Entities;
+using ASPNetTodoService.Infrastructure.Datastores;
 
-namespace ASPNetTodoService.API.Repositories
+namespace ASPNetTodoService.Infrastructure.Repositories
 {
     public class TodoItemsRepository : ITodoItemsRepository
     {

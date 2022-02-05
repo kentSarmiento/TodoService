@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ASPNetTodoService.API.Entities;
+using ASPNetTodoService.Domain.Entities;
 
-namespace ASPNetTodoService.API.Datastores
+namespace ASPNetTodoService.Infrastructure.Datastores
 {
     public class TodoContext : DbContext
     {

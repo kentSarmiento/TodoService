@@ -19,12 +19,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Filters;
 using AutoMapper;
-using ASPNetTodoAPI.Entities;
-using ASPNetTodoAPI.Datastores;
-using ASPNetTodoAPI.Repositories;
-using ASPNetTodoAPI.Mappings;
+//using ASPNetTodoService.API.Entities;
+//using ASPNetTodoService.API.Datastores;
+//using ASPNetTodoService.API.Repositories;
+using ASPNetTodoService.API.Mappings;
+using ASPNetTodoService.Infrastructure;
 
-namespace ASPNetTodoAPI
+namespace ASPNetTodoService.API
 {
     public class Startup
     {
@@ -38,24 +39,25 @@ namespace ASPNetTodoAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
-            if (Configuration.GetValue<string>("Database", "sql").ToLower() == "sql")
-            {
-                services.AddDbContext<TodoContext>(opt =>
-                                       opt.UseInMemoryDatabase("TodoList"));
-                services.AddTransient<ITodoItemsDatastore, TodoItemsInMemoryDatastore>();
-                services.AddTransient<ITodoItemsRepository, TodoItemsRepository>();
-            }
-            else
-            {
-                services.Configure<TodoItemsDatabaseSettings>(
-                    Configuration.GetSection(nameof(TodoItemsDatabaseSettings)));
+            //if (Configuration.GetValue<string>("Database", "sql").ToLower() == "sql")
+            //{
+            //    services.AddDbContext<TodoContext>(opt =>
+            //                           opt.UseInMemoryDatabase("TodoList"));
+            //    services.AddTransient<ITodoItemsDatastore, TodoItemsInMemoryDatastore>();
+            //    services.AddTransient<ITodoItemsRepository, TodoItemsRepository>();
+            //}
+            //else
+            //{
+            //    services.Configure<TodoItemsDatabaseSettings>(
+            //        Configuration.GetSection(nameof(TodoItemsDatabaseSettings)));
 
-                services.AddSingleton<ITodoItemsDatabaseSettings>(sp =>
-                    sp.GetRequiredService<IOptions<TodoItemsDatabaseSettings>>().Value);
+            //    services.AddSingleton<ITodoItemsDatabaseSettings>(sp =>
+            //        sp.GetRequiredService<IOptions<TodoItemsDatabaseSettings>>().Value);
 
-                services.AddSingleton<ITodoItemsDatastore, TodoItemsMongoDatastore>();
-                services.AddSingleton<ITodoItemsRepository, TodoItemsRepository>();
-            }
+            //    services.AddSingleton<ITodoItemsDatastore, TodoItemsMongoDatastore>();
+            //    services.AddSingleton<ITodoItemsRepository, TodoItemsRepository>();
+            //}
+            InfrastructureStartup.ConfigureServices(services);
 
             services
                 .AddControllers()
@@ -117,7 +119,7 @@ namespace ASPNetTodoAPI
             }
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASPNetTodoAPI v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASPNetTodoService.API v1"));
 
             app.UseHttpsRedirection();
 

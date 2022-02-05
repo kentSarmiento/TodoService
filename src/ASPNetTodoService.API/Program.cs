@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace ASPNetTodoAPI
+namespace ASPNetTodoService.API
 {
     public class Program
     {

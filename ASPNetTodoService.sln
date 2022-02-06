@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPNetTodoService.Domain", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPNetTodoService.UnitTest", "test\ASPNetTodoService.UnitTest\ASPNetTodoService.UnitTest.csproj", "{656402B3-1EEC-4C2D-922C-9E7C9E35D86C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNetTodoService.IntegrationTest", "test\ASPNetTodoService.IntegrationTest\ASPNetTodoService.IntegrationTest.csproj", "{1C327A8F-6D0C-425F-A74C-A5C9789C0824}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPNetTodoService.IntegrationTest", "test\ASPNetTodoService.IntegrationTest\ASPNetTodoService.IntegrationTest.csproj", "{1C327A8F-6D0C-425F-A74C-A5C9789C0824}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNetTodoService.Specs", "test\ASPNetTodoService.Specs\ASPNetTodoService.Specs.csproj", "{95155CBF-1E1A-4EA2-88C8-1B3BD5FF2540}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{1C327A8F-6D0C-425F-A74C-A5C9789C0824}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C327A8F-6D0C-425F-A74C-A5C9789C0824}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C327A8F-6D0C-425F-A74C-A5C9789C0824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95155CBF-1E1A-4EA2-88C8-1B3BD5FF2540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95155CBF-1E1A-4EA2-88C8-1B3BD5FF2540}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95155CBF-1E1A-4EA2-88C8-1B3BD5FF2540}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95155CBF-1E1A-4EA2-88C8-1B3BD5FF2540}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

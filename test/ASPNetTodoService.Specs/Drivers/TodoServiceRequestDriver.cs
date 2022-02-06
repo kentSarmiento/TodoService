@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RestSharp;
-using ASPNetTodoService.API.DTOs;
 
 namespace ASPNetTodoService.Specs.Drivers
 {
     public class TodoServiceRequestDriver
     {
-        private readonly string BASE_URL = "https://localhost:5001";
-        private readonly string ROUTE = "/api/todoitems";
-
-        protected readonly string TODO_ITEM_NAME = "Specflow Testing";
+        private readonly string BASE_URL = "https://localhost:5001/";
+        private readonly string ROUTE = "api/todoitems";
 
         private readonly RestClient _client;
 
@@ -21,30 +18,26 @@ namespace ASPNetTodoService.Specs.Drivers
             _client = new RestClient(BASE_URL);
         }
 
-        public async Task<List<TodoItemDTO>?> RetrieveTodoItems()
+        public async Task<List<TodoItem>?> RetrieveTodoItems()
         {
             var request = new RestRequest(ROUTE);
-            var response = await _client.GetAsync<TodoItemDTO[]>(request);
+            var todoList = await _client.GetAsync<TodoItem[]>(request);
 
-            return response?.ToList();
+            return todoList?.ToList();
         }
 
-        public async Task<TodoItemDTO?> RegisterTodoItem()
+        public async Task<TodoItem?> RegisterTodoItem(TodoItem todoItem)
         {
-            CreateTodoItemDTO newTodo = new CreateTodoItemDTO() { Name = TODO_ITEM_NAME, IsComplete = true };
-
-            var request = new RestRequest(ROUTE).AddJsonBody(newTodo);
-            var response = await _client.PostAsync<TodoItemDTO>(request);
-
-            return response;
+            var request = new RestRequest(ROUTE).AddJsonBody(todoItem);
+            return await _client.PostAsync<TodoItem>(request);
         }
 
         public async Task ClearTodoItems()
         {
-            var response = await RetrieveTodoItems();
-            if (response != null)
+            var todoList = await RetrieveTodoItems();
+            if (todoList != null)
             {
-                foreach (var todoItem in response)
+                foreach (var todoItem in todoList)
                 {
                     var request = new RestRequest($"{ROUTE}/{todoItem.Id}");
                     await _client.DeleteAsync(request);

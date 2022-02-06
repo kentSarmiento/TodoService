@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 using FluentAssertions;
-using ASPNetTodoService.API.DTOs;
 using ASPNetTodoService.Specs.Drivers;
 
 namespace ASPNetTodoService.Specs.Steps
@@ -12,13 +12,10 @@ namespace ASPNetTodoService.Specs.Steps
     public class RetrieveTodoListSteps
     {
         private readonly TodoServiceRequestDriver _todoServiceAPI;
-        private readonly ScenarioContext _scenarioContext;
+        private List<TodoItem>? _todoList;
 
-        private List<TodoItemDTO>? _todoList;
-
-        public RetrieveTodoListSteps(ScenarioContext injectedContext, TodoServiceRequestDriver todoServiceAPI)
+        public RetrieveTodoListSteps(TodoServiceRequestDriver todoServiceAPI)
         {
-            _scenarioContext = injectedContext;
             _todoServiceAPI = todoServiceAPI;
         }
 
@@ -29,9 +26,10 @@ namespace ASPNetTodoService.Specs.Steps
         }
         
         [Given(@"user added a todo item in the todo list")]
-        public async Task GivenUserAddedATodoItemInTheTodoList()
+        public async Task GivenUserAddedATodoItemInTheTodoList(Table table)
         {
-            await _todoServiceAPI.RegisterTodoItem();
+            TodoItem todoItem = table.CreateInstance<TodoItem>();
+            await _todoServiceAPI.RegisterTodoItem(todoItem);
         }
         
         [When(@"user retrieves the todo list")]
@@ -46,12 +44,14 @@ namespace ASPNetTodoService.Specs.Steps
             _todoList.Should().BeEmpty();
         }
         
-        [Then(@"todo list retrieved contains the todo item")]
-        public void ThenTodoListRetrievedContainsTheTodoItem()
+        [Then(@"todo list retrieved contains the added todo item")]
+        public void ThenTodoListRetrievedContainsTheAddedTodoItem(Table table)
         {
+            TodoItem todoItem = table.CreateInstance<TodoItem>();
 
             _todoList.Should().NotBeEmpty()
-                .And.HaveCount(1);
+                .And.OnlyContain(item => item.Equals(todoItem));
         }
+
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ASPNetTodoService.API;
-using ASPNetTodoService.Infrastructure.Datastores;
+using ASPNetTodoService.Infrastructure.Repositories;
 using ASPNetTodoService.Domain.Entities;
 
 namespace ASPNetTodoService.IntegrationTest

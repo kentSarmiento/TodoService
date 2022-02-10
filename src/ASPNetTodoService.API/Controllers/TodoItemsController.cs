@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using AutoMapper;
 using ASPNetTodoService.API.DTOs;
 using ASPNetTodoService.Domain.Entities;
-using ASPNetTodoService.Infrastructure.Repositories;
+using ASPNetTodoService.Domain.Interfaces;
 
 namespace ASPNetTodoService.API.Controllers
 {

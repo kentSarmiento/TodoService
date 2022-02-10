@@ -19,9 +19,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Filters;
 using AutoMapper;
-//using ASPNetTodoService.API.Entities;
-//using ASPNetTodoService.API.Datastores;
-//using ASPNetTodoService.API.Repositories;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using ASPNetTodoService.API.Mappings;
 using ASPNetTodoService.Infrastructure;
 
@@ -57,7 +56,7 @@ namespace ASPNetTodoService.API
             //    services.AddSingleton<ITodoItemsDatastore, TodoItemsMongoDatastore>();
             //    services.AddSingleton<ITodoItemsRepository, TodoItemsRepository>();
             //}
-            InfrastructureStartup.ConfigureServices(services);
+            //InfrastructureStartup.ConfigureServices(services);
 
             services
                 .AddControllers()
@@ -108,6 +107,18 @@ namespace ASPNetTodoService.API
 
             services.AddAutoMapper(typeof(TodoItemMappingProfile));
 
+        }
+
+        // ConfigureContainer is where you can register things directly
+        // with Autofac. This runs after ConfigureServices so the things
+        // here will override registrations made in ConfigureServices.
+        // Don't build the container; that gets done for you by the factory.
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            // Register your own things directly with Autofac here. Don't
+            // call builder.Populate(), that happens in AutofacServiceProviderFactory
+            // for you.
+            builder.RegisterModule(new InfrastructureModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

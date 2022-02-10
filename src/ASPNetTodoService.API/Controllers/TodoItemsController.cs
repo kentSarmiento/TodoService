@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -39,9 +40,9 @@ namespace ASPNetTodoService.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-        public ActionResult<IEnumerable<GetTodoItemDTO>> GetTodoItems()
+        public async Task<ActionResult<IEnumerable<GetTodoItemDTO>>> GetTodoItems()
         {
-            List<TodoItem> storedItems = _todoItemsRepository.Get();
+            List<TodoItem> storedItems = await _todoItemsRepository.GetAsync();
             List<GetTodoItemDTO> todoItems = storedItems.Select(
                 item => _mapper.Map<GetTodoItemDTO>(item)).ToList();
 
@@ -61,9 +62,9 @@ namespace ASPNetTodoService.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<GetTodoItemDTO>> GetTodoItem(string id)
+        public async Task<ActionResult<IEnumerable<GetTodoItemDTO>>> GetTodoItem(string id)
         {
-            var storedItem = _todoItemsRepository.Get(id);
+            var storedItem = await _todoItemsRepository.GetAsync(id);
 
             if (storedItem == null)
                 return NotFound();
@@ -85,10 +86,10 @@ namespace ASPNetTodoService.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public ActionResult<TodoItemDTO> CreateTodoItem(CreateTodoItemDTO todoItemDto)
+        public async Task<ActionResult<TodoItemDTO>> CreateTodoItem(CreateTodoItemDTO todoItemDto)
         {
             TodoItem todoItem = _mapper.Map<TodoItem>(todoItemDto);
-            _todoItemsRepository.Create(todoItem);
+            await _todoItemsRepository.CreateAsync(todoItem);
 
             TodoItemDTO createdItemDto = _mapper.Map<TodoItemDTO>(todoItem);
             return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, createdItemDto);
@@ -107,7 +108,7 @@ namespace ASPNetTodoService.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public ActionResult UpdateTodoItem(string id, TodoItemDTO todoItemDto)
+        public async Task<ActionResult> UpdateTodoItem(string id, TodoItemDTO todoItemDto)
         {
             if (id != todoItemDto.Id)
             {
@@ -115,7 +116,7 @@ namespace ASPNetTodoService.API.Controllers
             }
 
             TodoItem todoItem = _mapper.Map<TodoItem>(todoItemDto);
-            _todoItemsRepository.Update(id, todoItem);
+            await _todoItemsRepository.UpdateAsync(id, todoItem);
 
             return NoContent();
         }
@@ -133,9 +134,9 @@ namespace ASPNetTodoService.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult PatchTodoItem(string id, [FromBody] JsonPatchDocument<TodoItemDTO> patchDoc)
+        public async Task<ActionResult> PatchTodoItem(string id, [FromBody] JsonPatchDocument<TodoItemDTO> patchDoc)
         {
-            var todoItem = _todoItemsRepository.Get(id);
+            var todoItem = await _todoItemsRepository.GetAsync(id);
 
             if (todoItem == null)
                 return NotFound();
@@ -145,7 +146,7 @@ namespace ASPNetTodoService.API.Controllers
 
             todoItem.Name = todoItemDto.Name;
             todoItem.IsComplete = todoItemDto.IsComplete;
-            _todoItemsRepository.Update(id, todoItem);
+            await _todoItemsRepository.UpdateAsync(id, todoItem);
 
             return NoContent();
         }
@@ -163,14 +164,14 @@ namespace ASPNetTodoService.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult DeleteTodoItem(string id)
+        public async Task<ActionResult> DeleteTodoItem(string id)
         {
-            var storedItem = _todoItemsRepository.Get(id);
+            var storedItem = await _todoItemsRepository.GetAsync(id);
 
             if (storedItem == null)
                 return NotFound();
 
-            _todoItemsRepository.Delete(id);
+            await _todoItemsRepository.DeleteAsync(id);
             return NoContent();
         }
     }

@@ -5,6 +5,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using ASPNetTodoService.Domain.Entities;
 using ASPNetTodoService.Domain.Interfaces;
+using System.Threading.Tasks;
 
 namespace ASPNetTodoService.Infrastructure.Repositories
 {
@@ -20,9 +21,9 @@ namespace ASPNetTodoService.Infrastructure.Repositories
             _todoItems = database.GetCollection<DatabaseItem>(settings.TodoItemsCollectionName);
         }
 
-        public List<TodoItem> Get()
+        public async Task<List<TodoItem>> GetAsync()
         {
-            List<DatabaseItem> items = _todoItems.Find(todoItem => true).ToList();
+            List<DatabaseItem> items = await _todoItems.Find(todoItem => true).ToListAsync();
 
             List<TodoItem> response = items.Select(item => new TodoItem()
             {
@@ -34,9 +35,9 @@ namespace ASPNetTodoService.Infrastructure.Repositories
             return response;
         }
 
-        public TodoItem Get(string id)
+        public async Task<TodoItem> GetAsync(string id)
         {
-            DatabaseItem item = _todoItems.Find<DatabaseItem>(todoItem => todoItem.Id == id).FirstOrDefault();
+            DatabaseItem item = await _todoItems.Find<DatabaseItem>(todoItem => todoItem.Id == id).FirstOrDefaultAsync();
 
             TodoItem response = new TodoItem()
             {
@@ -48,7 +49,7 @@ namespace ASPNetTodoService.Infrastructure.Repositories
             return response;
         }
 
-        public TodoItem Create(TodoItem item)
+        public async Task<TodoItem> CreateAsync(TodoItem item)
         {
             DatabaseItem databaseItem = new DatabaseItem
             {
@@ -56,13 +57,13 @@ namespace ASPNetTodoService.Infrastructure.Repositories
                 IsComplete = item.IsComplete,
             };
 
-            _todoItems.InsertOne(databaseItem);
+            await _todoItems.InsertOneAsync(databaseItem);
             item.Id = databaseItem.Id;
 
             return item;
         }
 
-        public void Update(string id, TodoItem item)
+        public async Task UpdateAsync(string id, TodoItem item)
         {
             DatabaseItem databaseItem = new DatabaseItem
             {
@@ -71,11 +72,11 @@ namespace ASPNetTodoService.Infrastructure.Repositories
                 IsComplete = item.IsComplete,
             };
 
-            _todoItems.ReplaceOne(todoItem => todoItem.Id == id, databaseItem);
+            await _todoItems.ReplaceOneAsync(todoItem => todoItem.Id == id, databaseItem);
         }
 
-        public void Delete(string id) =>
-            _todoItems.DeleteOne(todoItem => todoItem.Id == id);
+        public async Task DeleteAsync(string id) =>
+            await _todoItems.DeleteOneAsync(todoItem => todoItem.Id == id);
     }
 
     public class DatabaseItem

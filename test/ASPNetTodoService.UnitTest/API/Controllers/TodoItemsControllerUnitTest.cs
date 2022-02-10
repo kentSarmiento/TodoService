@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using ASPNetTodoService.API.Controllers;
 using ASPNetTodoService.API.DTOs;
-using ASPNetTodoService.Infrastructure.Repositories;
 using ASPNetTodoService.Domain.Entities;
+using ASPNetTodoService.Domain.Interfaces;
 
 namespace ASPNetTodoService.UnitTest.API.Controllers
 {

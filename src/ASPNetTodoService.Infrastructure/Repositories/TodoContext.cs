@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ASPNetTodoService.Domain.Entities;
 
-namespace ASPNetTodoService.Infrastructure.Datastores
+namespace ASPNetTodoService.Infrastructure.Repositories
 {
     public class TodoContext : DbContext
     {

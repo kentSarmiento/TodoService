@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using ASPNetTodoService.Domain.Entities;
 
-namespace ASPNetTodoService.Infrastructure.Datastores
+namespace ASPNetTodoService.Domain.Interfaces
 {
-    public interface ITodoItemsDatastore
+    public interface ITodoItemsRepository
     {
         public List<TodoItem> Get();
 

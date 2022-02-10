@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using ASPNetTodoService.Domain.Entities;
+using ASPNetTodoService.Domain.Interfaces;
 
-namespace ASPNetTodoService.Infrastructure.Datastores
+namespace ASPNetTodoService.Infrastructure.Repositories
 {
-    public class TodoItemsInMemoryDatastore : ITodoItemsDatastore
+    public class TodoItemsInMemoryRepository : ITodoItemsRepository
     {
         private readonly TodoContext _context;
-        public TodoItemsInMemoryDatastore(TodoContext context)
+        public TodoItemsInMemoryRepository(TodoContext context)
         {
             _context = context;
         }

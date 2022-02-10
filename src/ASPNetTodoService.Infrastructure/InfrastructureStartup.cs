@@ -6,7 +6,7 @@ using System.Reflection;
 using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using ASPNetTodoService.Infrastructure.Datastores;
+using ASPNetTodoService.Domain.Interfaces;
 using ASPNetTodoService.Infrastructure.Repositories;
 
 namespace ASPNetTodoService.Infrastructure
@@ -23,8 +23,7 @@ namespace ASPNetTodoService.Infrastructure
             //{
                 services.AddDbContext<TodoContext>(opt =>
                                        opt.UseInMemoryDatabase("TodoList"));
-                services.AddTransient<ITodoItemsDatastore, TodoItemsInMemoryDatastore>();
-                services.AddTransient<ITodoItemsRepository, TodoItemsRepository>();
+                services.AddTransient<ITodoItemsRepository, TodoItemsInMemoryRepository>();
             //}
             //else
             //{

@@ -1,4 +1,4 @@
-﻿namespace ASPNetTodoService.Infrastructure.Datastores
+﻿namespace ASPNetTodoService.Infrastructure.Repositories
 {
     public interface ITodoItemsDatabaseSettings
     {

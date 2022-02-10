@@ -4,14 +4,15 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using ASPNetTodoService.Domain.Entities;
+using ASPNetTodoService.Domain.Interfaces;
 
-namespace ASPNetTodoService.Infrastructure.Datastores
+namespace ASPNetTodoService.Infrastructure.Repositories
 {
-    public class TodoItemsMongoDatastore : ITodoItemsDatastore
+    public class TodoItemsMongoRepository : ITodoItemsRepository
     {
         private readonly IMongoCollection<DatabaseItem> _todoItems;
 
-        public TodoItemsMongoDatastore(ITodoItemsDatabaseSettings settings)
+        public TodoItemsMongoRepository(ITodoItemsDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);

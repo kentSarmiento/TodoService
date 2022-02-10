@@ -7,6 +7,7 @@ using ASPNetTodoService.API.Controllers;
 using ASPNetTodoService.API.DTOs;
 using ASPNetTodoService.Domain.Entities;
 using ASPNetTodoService.Domain.Interfaces;
+using System.Threading.Tasks;
 
 namespace ASPNetTodoService.UnitTest.API.Controllers
 {
@@ -21,7 +22,7 @@ namespace ASPNetTodoService.UnitTest.API.Controllers
         public void Setup() {}
 
         [Test]
-        public void GetTodoItems_NoRegisteredTodoItems_ReturnsEmptyList()
+        public async Task GetTodoItems_NoRegisteredTodoItems_ReturnsEmptyList()
         {
             var repoItems = new List<TodoItem>();
             var expectedItems = new List<GetTodoItemDTO>();
@@ -29,10 +30,10 @@ namespace ASPNetTodoService.UnitTest.API.Controllers
             var repoMock = new Mock<ITodoItemsRepository>();
             var mapperMock = new Mock<IMapper>();
 
-            repoMock.Setup(r => r.Get()).Returns(repoItems);
+            repoMock.Setup(r => r.GetAsync()).ReturnsAsync(repoItems);
 
             var todoItemsController = new TodoItemsController(repoMock.Object, mapperMock.Object);
-            var response = todoItemsController.GetTodoItems();
+            var response = await todoItemsController.GetTodoItems();
 
             Assert.IsInstanceOf<ActionResult<IEnumerable<GetTodoItemDTO>>>(response);
             Assert.IsInstanceOf<OkObjectResult>(response.Result);
@@ -40,12 +41,12 @@ namespace ASPNetTodoService.UnitTest.API.Controllers
             var responseItems = (response.Result as OkObjectResult).Value as IEnumerable<GetTodoItemDTO>;
             CollectionAssert.AreEqual(expectedItems, responseItems);
 
-            repoMock.Verify(r => r.Get(), Times.Once());
+            repoMock.Verify(r => r.GetAsync(), Times.Once());
             mapperMock.Verify(m => m.Map<GetTodoItemDTO>(It.IsAny<TodoItem>()), Times.Never());
         }
 
         [Test]
-        public void GetTodoItems_WithRegisteredTodoItems_ReturnsNonEmptyList()
+        public async Task GetTodoItems_WithRegisteredTodoItems_ReturnsNonEmptyList()
         {
             var todoItem = new TodoItem() { Id = TODO_ITEM_ID, Name = TODO_ITEM_NAME, IsComplete = true, Secret = TODO_ITEM_SECRET };
             var todoItemDto = new GetTodoItemDTO() { Id = TODO_ITEM_ID, Name = TODO_ITEM_NAME, IsComplete = true };
@@ -56,11 +57,11 @@ namespace ASPNetTodoService.UnitTest.API.Controllers
             var repoMock = new Mock<ITodoItemsRepository>();
             var mapperMock = new Mock<IMapper>();
 
-            repoMock.Setup(r => r.Get()).Returns(repoItems);
+            repoMock.Setup(r => r.GetAsync()).ReturnsAsync(repoItems);
             mapperMock.Setup(m => m.Map<GetTodoItemDTO>(It.IsAny<TodoItem>())).Returns(todoItemDto);
 
             var todoItemsController = new TodoItemsController(repoMock.Object, mapperMock.Object);
-            var response = todoItemsController.GetTodoItems();
+            var response = await todoItemsController.GetTodoItems();
 
             Assert.IsInstanceOf<ActionResult<IEnumerable<GetTodoItemDTO>>>(response);
             Assert.IsInstanceOf<OkObjectResult>(response.Result);
@@ -68,7 +69,7 @@ namespace ASPNetTodoService.UnitTest.API.Controllers
             var responseItems = (response.Result as OkObjectResult).Value as IEnumerable<GetTodoItemDTO>;
             CollectionAssert.AreEqual(expectedItems, responseItems);
 
-            repoMock.Verify(r => r.Get(), Times.Once());
+            repoMock.Verify(r => r.GetAsync(), Times.Once());
             mapperMock.Verify(m => m.Map<GetTodoItemDTO>(todoItem), Times.Once());
         }
     }

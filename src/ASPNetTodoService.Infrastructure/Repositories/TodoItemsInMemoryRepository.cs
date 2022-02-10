@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using ASPNetTodoService.Domain.Entities;
 using ASPNetTodoService.Domain.Interfaces;
+using System.Threading.Tasks;
 
 namespace ASPNetTodoService.Infrastructure.Repositories
 {
@@ -15,34 +16,33 @@ namespace ASPNetTodoService.Infrastructure.Repositories
             _context = context;
         }
 
-        public List<TodoItem> Get()
+        public async Task<List<TodoItem>> GetAsync()
         {
-            return _context.TodoItems.ToList();
+            return await _context.TodoItems.ToListAsync();
         }
 
-        public TodoItem Get(string id)
+        public async Task<TodoItem> GetAsync(string id)
         {
-            return _context.TodoItems.Find(id);
+            return await _context.TodoItems.FindAsync(id);
         }
 
-        public TodoItem Create(TodoItem item)
+        public async Task<TodoItem> CreateAsync(TodoItem item)
         {
             item.Id = Guid.NewGuid().ToString();
 
             _context.TodoItems.Add(item);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return item;
         }
 
-        public void Update(string id, TodoItem item)
+        public async Task UpdateAsync(string id, TodoItem item)
         {
-
             _context.Entry(item).State = EntityState.Modified;
 
             try
             {
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -50,11 +50,11 @@ namespace ASPNetTodoService.Infrastructure.Repositories
             }
         }
 
-        public void Delete(string id)
+        public async Task DeleteAsync(string id)
         {
             var todoItem = _context.TodoItems.Find(id);
             _context.TodoItems.Remove(todoItem);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

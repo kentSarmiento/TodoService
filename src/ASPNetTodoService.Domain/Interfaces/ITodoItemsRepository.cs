@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ASPNetTodoService.Domain.Entities;
 
 namespace ASPNetTodoService.Domain.Interfaces
 {
     public interface ITodoItemsRepository
     {
-        public List<TodoItem> Get();
+        public Task<List<TodoItem>> GetAsync();
 
-        public TodoItem Get(string id);
+        public Task<TodoItem> GetAsync(string id);
 
-        public TodoItem Create(TodoItem item);
+        public Task<TodoItem> CreateAsync(TodoItem item);
 
-        public void Update(string id, TodoItem item);
+        public Task UpdateAsync(string id, TodoItem item);
 
-        public void Delete(string id);
+        public Task DeleteAsync(string id);
     }
 }

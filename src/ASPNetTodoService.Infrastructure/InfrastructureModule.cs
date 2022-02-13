@@ -12,47 +12,53 @@ namespace ASPNetTodoService.Infrastructure
 {
     public class InfrastructureModule : Module
     {
+        public RepositoryType RepositoryType { get; set; }
+        // public TodoItemsDatabaseSettings DatabaseSettings { get; set; }
+
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(x =>
+            switch (RepositoryType)
             {
-                var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
-                optionsBuilder.UseInMemoryDatabase("TodoList");
-                return new TodoContext(optionsBuilder.Options);
-            }).InstancePerLifetimeScope();
+                case RepositoryType.MongoDb:
+                    // services.Configure<TodoItemsDatabaseSettings>(
+                    //     config.GetSection(nameof(TodoItemsDatabaseSettings)));
 
-            builder.RegisterType<TodoItemsInMemoryRepository>().As<ITodoItemsRepository>()
-                .InstancePerLifetimeScope();
+                    // services.AddSingleton<ITodoItemsDatabaseSettings>(sp =>
+                    //     sp.GetRequiredService<IOptions<TodoItemsDatabaseSettings>>().Value);
+                    break;
+
+                case RepositoryType.Sqlite:
+                    builder.Register(x => TodoContextFactory.CreateDbContext())
+                        .InstancePerLifetimeScope();
+                    break;
+
+                case RepositoryType.SqlInMemory:
+                default:
+                    builder.Register(x =>
+                    {
+                       var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
+                       optionsBuilder.UseInMemoryDatabase("TodoList");
+
+                       return new TodoContext(optionsBuilder.Options);
+                    }).InstancePerLifetimeScope();
+                    break;
+            }
+
+            switch (RepositoryType)
+            {
+                case RepositoryType.MongoDb:
+                    builder.RegisterType<TodoItemsMongoRepository>().As<ITodoItemsRepository>()
+                        .InstancePerLifetimeScope();
+                    break;
+
+                case RepositoryType.Sqlite:
+                case RepositoryType.SqlInMemory:
+                default:
+                    builder.RegisterType<TodoItemsEFRepository>().As<ITodoItemsRepository>()
+                        .InstancePerLifetimeScope();
+                    break;
+            }
+
         }
     }
-
-    //public static class InfrastructureStartup
-    //{
-    //    // This method gets called by the runtime. Use this method to add services to the container.
-    //    public static IServiceCollection ConfigureServices(
-    //        IServiceCollection services
-    //        // this IServiceCollection services, IConfiguration config
-    //    )
-    //    {
-    //        //if (config.GetValue<string>("Database", "sql").ToLower() == "sql")
-    //        //{
-    //            services.AddDbContext<TodoContext>(opt =>
-    //                                   opt.UseInMemoryDatabase("TodoList"));
-    //            services.AddTransient<ITodoItemsRepository, TodoItemsInMemoryRepository>();
-    //        //}
-    //        //else
-    //        //{
-    //        //    services.Configure<TodoItemsDatabaseSettings>(
-    //        //        config.GetSection(nameof(TodoItemsDatabaseSettings)));
-
-    //        //    services.AddSingleton<ITodoItemsDatabaseSettings>(sp =>
-    //        //        sp.GetRequiredService<IOptions<TodoItemsDatabaseSettings>>().Value);
-
-    //        //    services.AddSingleton<ITodoItemsDatastore, TodoItemsMongoDatastore>();
-    //        //    services.AddSingleton<ITodoItemsRepository, TodoItemsRepository>();
-    //        //}
-
-    //        return services;
-    //    }
-    //}
 }

@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace ASPNetTodoService.Infrastructure.Repositories
 {
-    public class TodoItemsInMemoryRepository : ITodoItemsRepository
+    public class TodoItemsEFRepository : ITodoItemsRepository
     {
         private readonly TodoContext _context;
-        public TodoItemsInMemoryRepository(TodoContext context)
+        public TodoItemsEFRepository(TodoContext context)
         {
             _context = context;
         }

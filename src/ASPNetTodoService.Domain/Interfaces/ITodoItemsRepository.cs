@@ -4,6 +4,13 @@ using ASPNetTodoService.Domain.Entities;
 
 namespace ASPNetTodoService.Domain.Interfaces
 {
+    public enum RepositoryType
+    {
+        MongoDb,
+        SqlInMemory,
+        Sqlite,
+    }
+
     public interface ITodoItemsRepository
     {
         public Task<List<TodoItem>> GetAsync();

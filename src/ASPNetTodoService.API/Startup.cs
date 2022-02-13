@@ -22,6 +22,7 @@ using AutoMapper;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using ASPNetTodoService.API.Mappings;
+using ASPNetTodoService.Domain.Interfaces;
 using ASPNetTodoService.Infrastructure;
 
 namespace ASPNetTodoService.API
@@ -40,26 +41,6 @@ namespace ASPNetTodoService.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //if (Configuration.GetValue<string>("Database", "sql").ToLower() == "sql")
-            //{
-            //    services.AddDbContext<TodoContext>(opt =>
-            //                           opt.UseInMemoryDatabase("TodoList"));
-            //    services.AddTransient<ITodoItemsDatastore, TodoItemsInMemoryDatastore>();
-            //    services.AddTransient<ITodoItemsRepository, TodoItemsRepository>();
-            //}
-            //else
-            //{
-            //    services.Configure<TodoItemsDatabaseSettings>(
-            //        Configuration.GetSection(nameof(TodoItemsDatabaseSettings)));
-
-            //    services.AddSingleton<ITodoItemsDatabaseSettings>(sp =>
-            //        sp.GetRequiredService<IOptions<TodoItemsDatabaseSettings>>().Value);
-
-            //    services.AddSingleton<ITodoItemsDatastore, TodoItemsMongoDatastore>();
-            //    services.AddSingleton<ITodoItemsRepository, TodoItemsRepository>();
-            //}
-            //InfrastructureStartup.ConfigureServices(services);
-
             services.AddCors(options =>
             {
                 options.AddPolicy(name: _localPolicy,
@@ -132,7 +113,19 @@ namespace ASPNetTodoService.API
             // Register your own things directly with Autofac here. Don't
             // call builder.Populate(), that happens in AutofacServiceProviderFactory
             // for you.
-            builder.RegisterModule(new InfrastructureModule());
+            RepositoryType repositoryType = RepositoryType.SqlInMemory;
+            if (Configuration.GetValue<string>("Database", "").ToLower() == "sqlite")
+            {
+                repositoryType = RepositoryType.Sqlite;
+            }
+            else if (Configuration.GetValue<string>("Database", "").ToLower() == "mongodb")
+            {
+                repositoryType = RepositoryType.MongoDb;
+            }
+
+            builder.RegisterModule(new InfrastructureModule() {
+                RepositoryType=repositoryType
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

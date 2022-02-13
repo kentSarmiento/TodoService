@@ -28,6 +28,8 @@ namespace ASPNetTodoService.API
 {
     public class Startup
     {
+        private const string _localPolicy = "LocalPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -57,6 +59,18 @@ namespace ASPNetTodoService.API
             //    services.AddSingleton<ITodoItemsRepository, TodoItemsRepository>();
             //}
             //InfrastructureStartup.ConfigureServices(services);
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: _localPolicy,
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
 
             services
                 .AddControllers()
@@ -132,9 +146,11 @@ namespace ASPNetTodoService.API
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASPNetTodoService.API v1"));
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(_localPolicy);
 
             // app.UseAuthentication();
             // app.UseAuthorization();

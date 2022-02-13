@@ -14,14 +14,18 @@ namespace ASPNetTodoService.Infrastructure
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(x =>
-            {
-                var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
-                optionsBuilder.UseInMemoryDatabase("TodoList");
-                return new TodoContext(optionsBuilder.Options);
-            }).InstancePerLifetimeScope();
+            //builder.Register(x =>
+            //{
+            //    var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
+            //    optionsBuilder.UseInMemoryDatabase("TodoList");
 
-            builder.RegisterType<TodoItemsInMemoryRepository>().As<ITodoItemsRepository>()
+            //    return new TodoContext(optionsBuilder.Options);
+            //}).InstancePerLifetimeScope();
+
+            builder.Register(x => TodoContextFactory.CreateDbContext())
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<TodoItemsEFRepository>().As<ITodoItemsRepository>()
                 .InstancePerLifetimeScope();
         }
     }
@@ -38,7 +42,7 @@ namespace ASPNetTodoService.Infrastructure
     //        //{
     //            services.AddDbContext<TodoContext>(opt =>
     //                                   opt.UseInMemoryDatabase("TodoList"));
-    //            services.AddTransient<ITodoItemsRepository, TodoItemsInMemoryRepository>();
+    //            services.AddTransient<ITodoItemsRepository, TodoItemsEFRepository>();
     //        //}
     //        //else
     //        //{

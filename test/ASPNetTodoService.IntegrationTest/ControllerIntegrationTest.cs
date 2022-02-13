@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using ASPNetTodoService.API;
 using ASPNetTodoService.Infrastructure.Repositories;
 using ASPNetTodoService.Domain.Entities;
+using Microsoft.AspNetCore.TestHost;
+using Autofac;
 
 namespace ASPNetTodoService.IntegrationTest
 {
@@ -17,67 +19,31 @@ namespace ASPNetTodoService.IntegrationTest
         protected readonly string TODO_ITEM_NAME = "NUnit + Moq Testing";
         protected readonly string TODO_ITEM_SECRET = "4321";
 
-        protected WebApplicationFactory<Startup> GenerateFullServer()
+        protected WebApplicationFactory<Startup> GenerateServer()
         {
             return new WebApplicationFactory<Startup>()
                 .WithWebHostBuilder(builder =>
                 {
-                    builder.ConfigureServices(services =>
+                    //builder.ConfigureServices(services =>
+                    //{
+                    //    var descriptor = services.SingleOrDefault(
+                    //        d => d.ServiceType == typeof(DbContextOptions<TodoContext>));
+
+                    //    services.Remove(descriptor);
+                    //    services.AddDbContext<TodoContext>(
+                    //        options => { options.UseInMemoryDatabase("TodoList"); });
+                    //});
+                    builder.ConfigureTestContainer<ContainerBuilder>(containerBuilder =>
                     {
-                        var descriptor = services.SingleOrDefault(
-                            d => d.ServiceType == typeof(DbContextOptions<TodoContext>));
-
-                        services.Remove(descriptor);
-                        services.AddDbContext<TodoContext>(
-                            options => { options.UseInMemoryDatabase("TodoList"); });
-
-                        var sp = services.BuildServiceProvider();
-
-                        using (var scope = sp.CreateScope())
+                        containerBuilder.Register(x =>
                         {
-                            var scopedServices = scope.ServiceProvider;
-                            var db = scopedServices.GetRequiredService<TodoContext>();
-                            var logger = scopedServices
-                                .GetRequiredService<ILogger<ControllerIntegrationTest>>();
+                            var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
+                            optionsBuilder.UseInMemoryDatabase("TodoList");
 
-                            db.Database.EnsureCreated();
-
-                            try
-                            {
-                                InitializeDatabase(db);
-                            }
-                            catch (Exception ex)
-                            {
-                                logger.LogError(ex, "An error occurred initializing the database. " +
-                                    "Error: {Message}", ex.Message);
-                            }
-                        }
+                            return new TodoContext(optionsBuilder.Options);
+                        }).InstancePerLifetimeScope();
                     });
                 });
-        }
-
-        protected WebApplicationFactory<Startup> GenerateEmptyServer()
-        {
-            return new WebApplicationFactory<Startup>()
-                .WithWebHostBuilder(builder =>
-                {
-                    builder.ConfigureServices(services =>
-                    {
-                        var descriptor = services.SingleOrDefault(
-                            d => d.ServiceType == typeof(DbContextOptions<TodoContext>));
-
-                        services.Remove(descriptor);
-                        services.AddDbContext<TodoContext>(
-                            options => { options.UseInMemoryDatabase("TodoList"); });
-                    });
-                });
-        }
-
-        private void InitializeDatabase(TodoContext db)
-        {
-            db.TodoItems.Add(
-                new TodoItem() { Id = TODO_ITEM_ID, Name = TODO_ITEM_NAME, IsComplete = true, Secret = TODO_ITEM_SECRET });
-            db.SaveChanges();
         }
     }
 }

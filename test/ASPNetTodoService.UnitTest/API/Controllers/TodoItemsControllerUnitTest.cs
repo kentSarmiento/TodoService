@@ -19,7 +19,7 @@ namespace ASPNetTodoService.UnitTest.API.Controllers
         private readonly string TODO_ITEM_SECRET = "4321";
 
         [SetUp]
-        public void Setup() {}
+        public void Setup() { }
 
         [Test]
         public async Task GetTodoItems_NoRegisteredTodoItems_ReturnsEmptyList()

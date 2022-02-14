@@ -24,6 +24,6 @@ namespace ASPNetTodoService.API.DTOs
         public bool IsComplete { get; set; }
     }
 
-    public class GetTodoItemDTO : TodoItemDTO {}
-    public class UpdateTodoItemDTO : TodoItemDTO {}
+    public class GetTodoItemDTO : TodoItemDTO { }
+    public class UpdateTodoItemDTO : TodoItemDTO { }
 }

@@ -36,10 +36,10 @@ namespace ASPNetTodoService.Infrastructure
                 default:
                     builder.Register(x =>
                     {
-                       var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
-                       optionsBuilder.UseInMemoryDatabase("TodoList");
+                        var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
+                        optionsBuilder.UseInMemoryDatabase("TodoList");
 
-                       return new TodoContext(optionsBuilder.Options);
+                        return new TodoContext(optionsBuilder.Options);
                     }).InstancePerLifetimeScope();
                     break;
             }

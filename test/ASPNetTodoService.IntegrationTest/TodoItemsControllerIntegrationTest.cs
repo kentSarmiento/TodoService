@@ -6,12 +6,12 @@ using ASPNetTodoService.API.DTOs;
 
 namespace ASPNetTodoService.IntegrationTest
 {
-    public class TodoItemsControllerIntegrationTest: ControllerIntegrationTest
+    public class TodoItemsControllerIntegrationTest : ControllerIntegrationTest
     {
         private readonly string ROUTE = "/api/todoitems";
 
         [SetUp]
-        public void Setup() {}
+        public void Setup() { }
 
         [Test]
         public async Task GetTodoItems_NoRegisteredTodoItems_ReturnsEmptyListAsync()

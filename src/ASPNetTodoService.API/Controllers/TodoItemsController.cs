@@ -10,6 +10,7 @@ using AutoMapper;
 using ASPNetTodoService.API.DTOs;
 using ASPNetTodoService.Domain.Entities;
 using ASPNetTodoService.Domain.Interfaces;
+using OpenIddict.Validation.AspNetCore;
 
 namespace ASPNetTodoService.API.Controllers
 {
@@ -82,6 +83,7 @@ namespace ASPNetTodoService.API.Controllers
         /// <response code="401">User is not authenticated</response>
         /// <response code="403">User is not authorized</response>
         [HttpPost]
+        [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

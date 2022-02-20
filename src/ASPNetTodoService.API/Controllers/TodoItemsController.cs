@@ -144,7 +144,7 @@ namespace ASPNetTodoService.API.Controllers
             TodoItemDTO todoItemDto = _mapper.Map<TodoItemDTO>(todoItem);
             patchDoc.ApplyTo(todoItemDto);
 
-            todoItem.Name = todoItemDto.Name;
+            todoItem.TaskName = todoItemDto.TaskName;
             todoItem.Done = todoItemDto.Done;
             await _todoItemsRepository.UpdateAsync(id, todoItem);
 

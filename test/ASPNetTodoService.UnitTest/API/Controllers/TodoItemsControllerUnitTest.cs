@@ -48,8 +48,8 @@ namespace ASPNetTodoService.UnitTest.API.Controllers
         [Test]
         public async Task GetTodoItems_WithRegisteredTodoItems_ReturnsNonEmptyList()
         {
-            var todoItem = new TodoItem() { Id = TODO_ITEM_ID, Name = TODO_ITEM_NAME, Done = true, Secret = TODO_ITEM_SECRET };
-            var todoItemDto = new GetTodoItemDTO() { Id = TODO_ITEM_ID, Name = TODO_ITEM_NAME, Done = true };
+            var todoItem = new TodoItem() { Id = TODO_ITEM_ID, TaskName = TODO_ITEM_NAME, Done = true, Secret = TODO_ITEM_SECRET };
+            var todoItemDto = new GetTodoItemDTO() { Id = TODO_ITEM_ID, TaskName = TODO_ITEM_NAME, Done = true };
 
             var repoItems = new List<TodoItem>() { todoItem };
             var expectedItems = new List<GetTodoItemDTO>() { todoItemDto };

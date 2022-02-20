@@ -28,7 +28,7 @@ namespace ASPNetTodoService.Infrastructure.Repositories
             List<TodoItem> response = items.Select(item => new TodoItem()
             {
                 Id = item.Id,
-                Name = item.Name,
+                TaskName = item.Name,
                 Done = item.Done,
             }).ToList();
 
@@ -42,7 +42,7 @@ namespace ASPNetTodoService.Infrastructure.Repositories
             TodoItem response = new TodoItem()
             {
                 Id = item.Id,
-                Name = item.Name,
+                TaskName = item.Name,
                 Done = item.Done,
             };
 
@@ -53,7 +53,7 @@ namespace ASPNetTodoService.Infrastructure.Repositories
         {
             DatabaseItem databaseItem = new DatabaseItem
             {
-                Name = item.Name,
+                Name = item.TaskName,
                 Done = item.Done,
             };
 
@@ -68,7 +68,7 @@ namespace ASPNetTodoService.Infrastructure.Repositories
             DatabaseItem databaseItem = new DatabaseItem
             {
                 Id = item.Id,
-                Name = item.Name,
+                Name = item.TaskName,
                 Done = item.Done,
             };
 

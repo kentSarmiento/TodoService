@@ -28,7 +28,7 @@ namespace ASPNetTodoService.IntegrationTest
         [Ignore("skip test")]
         public async Task GetTodoItems_WithRegisteredTodoItems_ReturnsNonEmptyList()
         {
-            var todoItemDto = new GetTodoItemDTO() { Id = TODO_ITEM_ID, Name = TODO_ITEM_NAME, IsComplete = true };
+            var todoItemDto = new GetTodoItemDTO() { Id = TODO_ITEM_ID, Name = TODO_ITEM_NAME, Done = true };
             var expectedItems = new List<GetTodoItemDTO>() { todoItemDto };
 
             var response = await GenerateServer().CreateClient().GetAsync(ROUTE);

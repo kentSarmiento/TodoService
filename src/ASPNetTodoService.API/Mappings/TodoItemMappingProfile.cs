@@ -11,22 +11,22 @@ namespace ASPNetTodoService.API.Mappings
             CreateMap<TodoItemDTO, TodoItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.IsComplete, opt => opt.MapFrom(src => src.IsComplete));
+                .ForMember(dest => dest.Done, opt => opt.MapFrom(src => src.Done));
             CreateMap<CreateTodoItemDTO, TodoItem>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.IsComplete, opt => opt.MapFrom(src => src.IsComplete));
+                .ForMember(dest => dest.Done, opt => opt.MapFrom(src => src.Done));
             CreateMap<TodoItem, TodoItemDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.IsComplete, opt => opt.MapFrom(src => src.IsComplete));
+                .ForMember(dest => dest.Done, opt => opt.MapFrom(src => src.Done));
             CreateMap<TodoItem, GetTodoItemDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.IsComplete, opt => opt.MapFrom(src => src.IsComplete));
+                .ForMember(dest => dest.Done, opt => opt.MapFrom(src => src.Done));
             CreateMap<TodoItem, UpdateTodoItemDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.IsComplete, opt => opt.MapFrom(src => src.IsComplete));
+                .ForMember(dest => dest.Done, opt => opt.MapFrom(src => src.Done));
         }
     }
 }

@@ -87,21 +87,7 @@ namespace ASPNetTodoService.API
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8
-                            .GetBytes(Configuration.GetValue("AppToken", ""))),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
-
             services.AddAutoMapper(typeof(TodoItemMappingProfile));
-
         }
 
         // ConfigureContainer is where you can register things directly
@@ -140,14 +126,14 @@ namespace ASPNetTodoService.API
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASPNetTodoService.API v1"));
 
-            // app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseCors(_localPolicy);
 
-            // app.UseAuthentication();
-            // app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

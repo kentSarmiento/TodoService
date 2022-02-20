@@ -10,12 +10,13 @@ using AutoMapper;
 using ASPNetTodoService.API.DTOs;
 using ASPNetTodoService.Domain.Entities;
 using ASPNetTodoService.Domain.Interfaces;
+using OpenIddict.Validation.AspNetCore;
 
 namespace ASPNetTodoService.API.Controllers
 {
     [Route("api/todoitems")]
     [ApiController]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     public class TodoItemsController : ControllerBase

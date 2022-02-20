@@ -155,7 +155,7 @@ this.FeatureBackground();
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
-                            "IsComplete"});
+                            "Done"});
                 table1.AddRow(new string[] {
                             "Learn Specflow",
                             "True"});
@@ -167,7 +167,7 @@ this.FeatureBackground();
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
-                            "IsComplete"});
+                            "Done"});
                 table2.AddRow(new string[] {
                             "Learn Specflow",
                             "True"});

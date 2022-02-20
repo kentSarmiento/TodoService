@@ -19,7 +19,7 @@ namespace ASPNetTodoService.UnitTest.API.Controllers
         private readonly string TODO_ITEM_SECRET = "4321";
 
         [SetUp]
-        public void Setup() {}
+        public void Setup() { }
 
         [Test]
         public async Task GetTodoItems_NoRegisteredTodoItems_ReturnsEmptyList()
@@ -48,8 +48,8 @@ namespace ASPNetTodoService.UnitTest.API.Controllers
         [Test]
         public async Task GetTodoItems_WithRegisteredTodoItems_ReturnsNonEmptyList()
         {
-            var todoItem = new TodoItem() { Id = TODO_ITEM_ID, Name = TODO_ITEM_NAME, IsComplete = true, Secret = TODO_ITEM_SECRET };
-            var todoItemDto = new GetTodoItemDTO() { Id = TODO_ITEM_ID, Name = TODO_ITEM_NAME, IsComplete = true };
+            var todoItem = new TodoItem() { Id = TODO_ITEM_ID, TaskName = TODO_ITEM_NAME, Done = true, Secret = TODO_ITEM_SECRET };
+            var todoItemDto = new GetTodoItemDTO() { Id = TODO_ITEM_ID, TaskName = TODO_ITEM_NAME, Done = true };
 
             var repoItems = new List<TodoItem>() { todoItem };
             var expectedItems = new List<GetTodoItemDTO>() { todoItemDto };

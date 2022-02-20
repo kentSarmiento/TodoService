@@ -28,8 +28,8 @@ namespace ASPNetTodoService.Infrastructure.Repositories
             List<TodoItem> response = items.Select(item => new TodoItem()
             {
                 Id = item.Id,
-                Name = item.Name,
-                IsComplete = item.IsComplete,
+                TaskName = item.Name,
+                Done = item.Done,
             }).ToList();
 
             return response;
@@ -42,8 +42,8 @@ namespace ASPNetTodoService.Infrastructure.Repositories
             TodoItem response = new TodoItem()
             {
                 Id = item.Id,
-                Name = item.Name,
-                IsComplete = item.IsComplete,
+                TaskName = item.Name,
+                Done = item.Done,
             };
 
             return response;
@@ -53,8 +53,8 @@ namespace ASPNetTodoService.Infrastructure.Repositories
         {
             DatabaseItem databaseItem = new DatabaseItem
             {
-                Name = item.Name,
-                IsComplete = item.IsComplete,
+                Name = item.TaskName,
+                Done = item.Done,
             };
 
             await _todoItems.InsertOneAsync(databaseItem);
@@ -68,8 +68,8 @@ namespace ASPNetTodoService.Infrastructure.Repositories
             DatabaseItem databaseItem = new DatabaseItem
             {
                 Id = item.Id,
-                Name = item.Name,
-                IsComplete = item.IsComplete,
+                Name = item.TaskName,
+                Done = item.Done,
             };
 
             await _todoItems.ReplaceOneAsync(todoItem => todoItem.Id == id, databaseItem);
@@ -85,7 +85,7 @@ namespace ASPNetTodoService.Infrastructure.Repositories
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public string Name { get; set; }
-        public bool IsComplete { get; set; }
+        public bool Done { get; set; }
     }
 
 }

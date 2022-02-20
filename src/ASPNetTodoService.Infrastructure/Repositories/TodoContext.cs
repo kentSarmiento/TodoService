@@ -8,7 +8,6 @@ namespace ASPNetTodoService.Infrastructure.Repositories
         public TodoContext(DbContextOptions<TodoContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
         }
 
         public DbSet<TodoItem> TodoItems { get; set; }

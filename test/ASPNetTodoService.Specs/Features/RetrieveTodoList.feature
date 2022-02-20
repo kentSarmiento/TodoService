@@ -16,10 +16,10 @@ Scenario: Retrieve todo list when there are no entries
 Scenario: Retrieve todo list when there are existing entries
 
   Given user added a todo item in the todo list
-    |Name           |IsComplete   |
+    |Name           |Done   |
     |Learn Specflow |True         |
 
   When user retrieves the todo list
   Then todo list retrieved contains the added todo item
-    |Name           |IsComplete   |
+    |Name           |Done   |
     |Learn Specflow |True         |

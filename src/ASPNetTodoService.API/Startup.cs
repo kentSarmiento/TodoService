@@ -123,8 +123,9 @@ namespace ASPNetTodoService.API
                 repositoryType = RepositoryType.MongoDb;
             }
 
-            builder.RegisterModule(new InfrastructureModule() {
-                RepositoryType=repositoryType
+            builder.RegisterModule(new InfrastructureModule()
+            {
+                RepositoryType = repositoryType
             });
         }
 

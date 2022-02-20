@@ -17,7 +17,7 @@ public class TodoContextFactory : IDesignTimeDbContextFactory<TodoContext>
     public static TodoContext CreateDbContext()
     {
         var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
-        var connectionString = "Data Source=Todos.db";
+        var connectionString = "Data Source=..\\Todos.db";
         optionsBuilder.UseSqlite(connectionString);
 
         return new TodoContext(optionsBuilder.Options);

@@ -6,6 +6,7 @@ using ASPNetTodoService.API.DTOs;
 
 namespace ASPNetTodoService.IntegrationTest
 {
+    [Ignore("Skip tests")]
     public class TodoItemsControllerIntegrationTest : ControllerIntegrationTest
     {
         private readonly string ROUTE = "/api/todoitems";

@@ -7,7 +7,7 @@
     <NoWarn>$(NoWarn);1591</NoWarn>
     <UserSecretsId>9be08ccd-77b1-414d-a9a1-0db9c80d41b1</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>.</DockerfileContext>
+    <DockerfileContext>..\..</DockerfileContext>
     <RootNamespace>ASPNetTodoService.API</RootNamespace>
   </PropertyGroup>
 

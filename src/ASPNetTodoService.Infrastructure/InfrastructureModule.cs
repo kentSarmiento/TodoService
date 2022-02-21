@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using OpenIddict.Validation.AspNetCore;
+using OpenIddict.Validation.SystemNetHttp;
+using System.Net.Http;
 
 namespace ASPNetTodoService.Infrastructure
 {
@@ -33,13 +35,19 @@ namespace ASPNetTodoService.Infrastructure
                 options.DefaultScheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;
             });
 
+            services.AddHttpClient(typeof(OpenIddictValidationSystemNetHttpOptions).Assembly.GetName().Name)
+                .ConfigurePrimaryHttpMessageHandler(_ => new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                });
+
             services.AddOpenIddict()
                 // Register the OpenIddict validation components.
                 .AddValidation(options =>
                 {
                     // Note: the validation handler uses OpenID Connect discovery
                     // to retrieve the issuer signing keys used to validate tokens.
-                    options.SetIssuer("https://localhost:5001/");
+                    options.SetIssuer("https://10.129.142.140:55002/");
 
                     // Register the encryption credentials. This sample uses a symmetric
                     // encryption key that is shared between the server and the Api2 sample

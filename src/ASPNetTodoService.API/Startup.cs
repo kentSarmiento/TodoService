@@ -63,7 +63,7 @@ namespace ASPNetTodoService.API
                 {
                     Version = "v1",
                     Title = "ToDo API",
-                    Description = "A simple example Web API using ASP.NET Core 5.0",
+                    Description = "A simple example Web API using ASP.NET Core 6.0",
                     Contact = new OpenApiContact
                     {
                         Name = "Kent Tristan Yves Sarmiento",

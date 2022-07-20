@@ -1,4 +1,6 @@
-## Introduction
+# Todo Web API [![Build status](https://badge.buildkite.com/2c96634ba24ba3900507e530b0eabbb6b7894162645a743719.svg)](https://buildkite.com/kent-sarmiento/aspnet-todo-service)
+
+## Introduction  
 
 This is a simple implementation for a Todo API using ASP.Net Core 6.0.
 

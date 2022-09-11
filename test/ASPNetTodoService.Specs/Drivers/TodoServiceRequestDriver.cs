@@ -8,7 +8,7 @@ namespace ASPNetTodoService.Specs.Drivers
 {
     public class TodoServiceRequestDriver
     {
-        private readonly string BASE_URL = "https://localhost:5001/";
+        private readonly string BASE_URL = "http://localhost:5000/";
         private readonly string ROUTE = "api/todoitems";
 
         private readonly RestClient _client;

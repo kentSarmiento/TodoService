@@ -1,4 +1,4 @@
-# Todo Web API [![.NET](https://github.com/kentSarmiento/ASPNetTodoService/actions/workflows/dotnet.yml/badge.svg)](https://github.com/kentSarmiento/ASPNetTodoService/actions/workflows/dotnet.yml)
+# Todo Web API [![.NET](https://github.com/kentSarmiento/TodoService/actions/workflows/dotnet.yml/badge.svg)](https://github.com/kentSarmiento/TodoService/actions/workflows/dotnet.yml)
 
 ## Introduction
 
@@ -8,13 +8,13 @@ This is a simple implementation for a Todo API using ASP.Net Core 6.0 and CLEAN 
 
 - [Source Implementation](src)  
   Source Implementation is divided into three Domains based on DDD-oriented Microservice architecture:
-  - [API](src/ASPNetTodoService.API)
-  - [Domain](src/ASPNetTodoService.Domain)
-  - [Infrastructure](src/ASPNetTodoService.Infrastructure)
+  - [API](src/TodoService.API)
+  - [Domain](src/TodoService.Domain)
+  - [Infrastructure](src/TodoService.Infrastructure)
 - [Test Implementation](test)  
   Test Implementation contains two levels of test:
-  - [Unit Test](test/ASPNetTodoService.UnitTest)
-  - [Acceptance Test](test/ASPNetTodoService.Specs)
+  - [Unit Test](test/TodoService.UnitTest)
+  - [Acceptance Test](test/TodoService.Specs)
 
 ## Project Setup
 
@@ -62,20 +62,20 @@ The following is the recommended setup for Development:
     ```
   - Unit Testing
     ```
-    dotnet test .\test\ASPNetTodoService.UnitTest\
+    dotnet test .\test\TodoService.UnitTest\
     ```
   - Unit Testing with Coverage
     ```
-    dotnet test .\test\ASPNetTodoService.UnitTest\ --collect:"XPlat Code Coverage"
+    dotnet test .\test\TodoService.UnitTest\ --collect:"XPlat Code Coverage"
     reportgenerator -reports:<location of coverage.cobertura.xml> -targetdir:"coveragereport" -reporttypes:Html
     ```
   - Acceptance Testing
     ```
-    dotnet test .\test\ASPNetTodoService.Specs\
+    dotnet test .\test\TodoService.Specs\
     ```
   - Acceptance Testing with LivingDoc output
     ```
-    dotnet test .\test\ASPNetTodoService.Specs\
+    dotnet test .\test\TodoService.Specs\
     livingdoc test-assembly <location of test assmebly file> -t <location of TestExecution.json file>
     ```
 
@@ -85,7 +85,7 @@ The following is the recommended setup for Development:
   Visual Studio launches the default browser and navigates to the swagger documentation for the Web API.
 - If using Visual Studio Code, the project can be run using the following command:
   ```
-  dotnet run --project .\src\ASPNetTodoService.API\ASPNetTodoService.API.csproj
+  dotnet run --project .\src\TodoService.API\TodoService.API.csproj
   ```
 
 ## CI/CD
